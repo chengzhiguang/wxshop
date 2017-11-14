@@ -46,13 +46,27 @@ public class WeixinServlet extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
-		logger.info("doPost 开始访问");
-		String signature = request.getParameter("signature");        // 随机字符串
-		if (StrUtils.isNotNullOrBlank(signature)) {
+
+		StringBuffer logUrlSb = new StringBuffer(request.getRequestURI());
+		logUrlSb.append("?");
+		Map<String, String[]> params = request.getParameterMap();
+		for (String key : params.keySet()) {
+			String[] values = params.get(key);
+			for (int i = 0; i < values.length; i++) {
+				String value = values[i];
+				logUrlSb.append(key);
+				logUrlSb.append("=");
+				logUrlSb.append(value);
+				logUrlSb.append("&");
+			}
+		}
+		logger.info("doPost 开始访问，访问路径：{}", logUrlSb.toString());
+
+		String openid = request.getParameter("openid");        // 随机字符串
+		if (StrUtils.isNullOrBlank(openid)) {
 			logger.info("doPost 微信接口验证");
 			String echostr = request.getParameter("echostr");        // 时间戳
 			String timestamp = request.getParameter("timestamp");        // 随机数
-			String nonce = request.getParameter("nonce");
 			response.getWriter().print(echostr);
 			return;
 		}
