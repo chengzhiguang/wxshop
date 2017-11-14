@@ -212,8 +212,8 @@ public class WeixinServiceImpl implements IWeixinService {
 				article.setTitle("大名府香油坊");
 				article.setDescription("一个专注传统工艺的高品质使用香油作坊！");
 				article.setPicUrl(PropertiesUtil.getPropValAsString("domain.url") + "/img/images/logo.jpg");
-													    
-				article.setUrl(PropertiesUtil.getPropValAsString("domain.url") + "/home/homeController/toHomePage.action?openId=" + msg.get("FromUserName"));
+				article.setUrl(PropertiesUtil.getPropValAsString("domain.url") + "/page/home/toHomePage?openId=" + msg.get("FromUserName"));
+
 				articleList.add(article);
 				logger.info("weixinService 请求的URL是："+article.getUrl());
 				newsMessage.setArticleCount(articleList.size());
