@@ -31,7 +31,7 @@ public class WeixinInterceptor extends HandlerInterceptorAdapter {
     	
     	logger.info("WeixinInterceptor 执行顺序: 1、preHandle================");
     	setRequest(request);
-
+		logger.info("WeixinInterceptor uri:{}",request.getRequestURI());
     	//从cookie中获取openId，如果没有获取到跳转到高级接口页面,继续往下执行
     	String openId = CookieUtil.getCookieValue(request, "openId");
     	logger.info("preHandle openId:" + openId);

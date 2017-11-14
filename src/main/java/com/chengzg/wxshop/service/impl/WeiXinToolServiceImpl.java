@@ -10,10 +10,12 @@ import com.chengzg.wxshop.utils.WxUtility;
 import com.chengzg.wxshop.utils.http.MessageUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 
 /**
  * Created by Administrator on 2017/11/9.
  */
+@Service
 public class WeiXinToolServiceImpl implements IWeiXinToolService {
     private static Logger logger = LoggerFactory.getLogger(WeiXinToolServiceImpl.class);
 

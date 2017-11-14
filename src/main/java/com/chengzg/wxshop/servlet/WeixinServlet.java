@@ -1,10 +1,7 @@
 package com.chengzg.wxshop.servlet;
 
 import com.chengzg.wxshop.service.IWeixinService;
-import com.chengzg.wxshop.utils.HttpUtil;
-import com.chengzg.wxshop.utils.SpringHelper;
-import com.chengzg.wxshop.utils.Utility;
-import com.chengzg.wxshop.utils.WxUtility;
+import com.chengzg.wxshop.utils.*;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,8 +47,17 @@ public class WeixinServlet extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		response.setCharacterEncoding("utf-8");
 		logger.info("doPost 开始访问");
+		String signature = request.getParameter("signature");        // 随机字符串
+		if (StrUtils.isNotNullOrBlank(signature)) {
+			logger.info("doPost 微信接口验证");
+			String echostr = request.getParameter("echostr");        // 时间戳
+			String timestamp = request.getParameter("timestamp");        // 随机数
+			String nonce = request.getParameter("nonce");
+			response.getWriter().print(echostr);
+			return;
+		}
 		try {
-			logger.info("doPost 开始访问");
+			logger.info("doPost 微信交互");
 	        String content= HttpUtil.getTextContent(request.getInputStream(),"utf-8");
 	        logger.info("doPost content:" + content);
 	        String responseXML = "123";
