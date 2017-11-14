@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+   xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:reg="http://www.dangdang.com/schema/ddframe/reg"
+       xmlns:job="http://www.dangdang.com/schema/ddframe/job"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.dangdang.com/schema/ddframe/reg
+       http://www.dangdang.com/schema/ddframe/reg/reg.xsd
+       http://www.dangdang.com/schema/ddframe/job
+       http://www.dangdang.com/schema/ddframe/job/job.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       "
+       default-autowire="byName">
+    <context:component-scan base-package="com.ziroom.busrecoup"/>
+    <reg:zookeeper id="regCenter" server-lists="${elastic.server}" namespace="${elastic.namespace}"
+                   base-sleep-time-milliseconds="1000" max-sleep-time-milliseconds="3000" max-retries="3"/>
+    <job:simple id="busRecoupJob" class="com.ziroom.busrecoup.elasticjob.SimpleJob"
+                registry-center-ref="regCenter" sharding-total-count="10"
+                cron="* 10 * * * ?" description="通用业务补偿Job"/>
+
+    <job:simple id="testJob" class="com.chengzg.wxshop.elastic.TestJob"
+                registry-center-ref="regCenter" sharding-total-count="4"
+                cron="0 0/8 * * * ?" description="测试任务"/>
+</beans>

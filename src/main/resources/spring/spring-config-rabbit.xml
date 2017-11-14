@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd http://www.springframework.org/schema/rabbit http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <description>rabbitmq 连接服务配置</description>
+    <!-- 连接配置 -->
+    <rabbit:connection-factory id="connectionFactory" host="${mq.host}" username="${mq.username}" password="${mq.password}" port="${mq.port}" virtual-host="${mq.vhost}" />
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <!-- spring template声明-->
+    <rabbit:template exchange="hire.contract.fin" id="amqpTemplate"  connection-factory="connectionFactory"  message-converter="jsonMessageConverter" />
+
+    <!-- 消息对象json转换类 -->
+    <bean id="jsonMessageConverter" class="org.springframework.amqp.support.converter.Jackson2JsonMessageConverter" />
+
+
+    <rabbit:queue id="hire.message" name="hire.message" durable="true" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="db.message" name="db.message" durable="true" auto-delete="false" exclusive="false" />
+    <rabbit:queue id="ami.message" name="ami.message" durable="true" auto-delete="false" exclusive="false" />
+
+    <rabbit:direct-exchange name="hire.contract.fin" durable="true" auto-delete="false" id="hire.contract.fin">
+        <rabbit:bindings>
+            <rabbit:binding queue="hire.message" key="hire.message"/>
+            <rabbit:binding queue="db.message" key="db.message"/>
+            <rabbit:binding queue="ami.message" key="ami.message"/>
+        </rabbit:bindings>
+    </rabbit:direct-exchange>
+
+
+    <rabbit:listener-container connection-factory="connectionFactory" acknowledge="manual">
+        <rabbit:listener queues="hire.message" ref="hireQueueListenter"/>
+        <rabbit:listener queues="db.message" ref="dbQueueListenter"/>
+        <rabbit:listener queues="ami.message" ref="amiQueueListenter"/>
+    </rabbit:listener-container>
+
+</beans>
