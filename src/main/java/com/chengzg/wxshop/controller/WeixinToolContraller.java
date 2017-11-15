@@ -90,7 +90,7 @@ public class WeixinToolContraller extends BaseController {
 
             logger.info("weixinGetName==state==" + state);
 
-            return new ModelAndView(new RedirectView(PropertiesUtil.getPropValAsString("wx_app_id") + "/page/home/toHomePage"));
+            return new ModelAndView(new RedirectView(PropertiesUtil.getPropValAsString("domain.url") + "/page/home/toHomePage"));
         }catch (Exception e) {
             logger.error("weixinGetName 获取 state code 出现错误", e);
             return new ModelAndView("jsp/404");

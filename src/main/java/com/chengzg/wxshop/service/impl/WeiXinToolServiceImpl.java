@@ -59,7 +59,7 @@ public class WeiXinToolServiceImpl implements IWeiXinToolService {
         }
         JSONObject jsonObject = JSONObject.parseObject(json);
         if(jsonObject != null && jsonObject.containsKey("access_token")){
-            TokenBean tokenBean = (TokenBean) JSON.parseObject(jsonObject.getString("access_token"), TokenBean.class);
+            TokenBean tokenBean = (TokenBean) JSON.parseObject(json, TokenBean.class);
             return tokenBean;
         }
 

@@ -2,7 +2,8 @@ package com.chengzg.wxshop.utils.http;
 
 
 import com.chengzg.wxshop.utils.http.bean.HttpPoster;
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 import java.util.Set;
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 public class MessageUtil {
 	
-	private static final Logger logger = Logger.getLogger(MessageUtil.class);
+	private static final Logger logger = LoggerFactory.getLogger(MessageUtil.class);
 
 	public static String getTransmessageStr(String requrl) {
 

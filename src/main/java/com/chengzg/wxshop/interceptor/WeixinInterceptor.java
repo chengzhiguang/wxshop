@@ -36,7 +36,7 @@ public class WeixinInterceptor extends HandlerInterceptorAdapter {
     	String openId = CookieUtil.getCookieValue(request, "openId");
     	logger.info("preHandle openId:" + openId);
     	if(openId == null || "".equals(openId.trim())){
-    		CookieUtil.addCookie(response, "openId", "123123123", 12000, "/");
+    		//CookieUtil.addCookie(response, "openId", "123123123", 12000, "/");
     		
     		String urlSource = request.getParameter("urlSource");
     		logger.info("preHandle 微信回调方法：" + PropertiesUtil.getPropValAsString("domain.url") + "page/wxtool/jumpWeixinPage?urlSource=" + urlSource);
