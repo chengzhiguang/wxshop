@@ -7,7 +7,7 @@
     </appender>
     <appender name="FILE" class="com.ziroom.tech.scaffold.boot.log.logback.appender.PlatformRollingFileAppender">
         <rollingPolicy class="com.ziroom.tech.scaffold.boot.log.logback.appender.PlatformTimeBasedRollingPolicy">
-            <fileNamePattern>/home/chengzg/logs/wxshop.chengzg.com/urgedebt.log.%d{yyyy-MM-dd}</fileNamePattern>
+            <fileNamePattern>/home/chengzg/logs/wxshop.chengzg.com/wxshop.log.%d{yyyy-MM-dd}</fileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
         <encoder>
