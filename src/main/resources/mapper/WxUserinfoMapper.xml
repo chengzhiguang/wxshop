@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.chengzg.wxshop.mapper.WxUserinfoMapper">
+  <resultMap id="BaseResultMap" type="com.chengzg.wxshop.entity.WxUserinfo">
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="user_phone" jdbcType="VARCHAR" property="userPhone" />
+    <result column="wx_open_id" jdbcType="VARCHAR" property="wxOpenId" />
+    <result column="wx_nike_name" jdbcType="VARCHAR" property="wxNikeName" />
+    <result column="wx_country" jdbcType="VARCHAR" property="wxCountry" />
+    <result column="wx_city" jdbcType="VARCHAR" property="wxCity" />
+    <result column="wx_language" jdbcType="VARCHAR" property="wxLanguage" />
+    <result column="wx_province" jdbcType="VARCHAR" property="wxProvince" />
+    <result column="wx_sex" jdbcType="INTEGER" property="wxSex" />
+    <result column="wx_head_pic" jdbcType="VARCHAR" property="wxHeadPic" />
+    <result column="crate_time" jdbcType="TIMESTAMP" property="crateTime" />
+    <result column="is_del" jdbcType="INTEGER" property="isDel" />
+    <result column="last_modify_time" jdbcType="TIMESTAMP" property="lastModifyTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, user_phone, wx_open_id, wx_nike_name, wx_country, wx_city, wx_language, wx_province, 
+    wx_sex, wx_head_pic, crate_time, is_del, last_modify_time
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from tb_wx_userinfo
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+
+  <select id="selectByWxOpenId" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from tb_wx_userinfo
+    where wx_open_id = #{wxOpenId,jdbcType=VARCHAR} limit 1
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
+    delete from tb_wx_userinfo
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.chengzg.wxshop.entity.WxUserinfo">
+    insert into tb_wx_userinfo (id, user_phone, wx_open_id, 
+      wx_nike_name, wx_country, wx_city, 
+      wx_language, wx_province, wx_sex, 
+      wx_head_pic, crate_time, is_del, 
+      last_modify_time)
+    values (#{id,jdbcType=BIGINT}, #{userPhone,jdbcType=VARCHAR}, #{wxOpenId,jdbcType=VARCHAR}, 
+      #{wxNikeName,jdbcType=VARCHAR}, #{wxCountry,jdbcType=VARCHAR}, #{wxCity,jdbcType=VARCHAR}, 
+      #{wxLanguage,jdbcType=VARCHAR}, #{wxProvince,jdbcType=VARCHAR}, #{wxSex,jdbcType=INTEGER}, 
+      #{wxHeadPic,jdbcType=VARCHAR}, #{crateTime,jdbcType=TIMESTAMP}, #{isDel,jdbcType=INTEGER}, 
+      #{lastModifyTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.chengzg.wxshop.entity.WxUserinfo">
+    insert into tb_wx_userinfo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="userPhone != null">
+        user_phone,
+      </if>
+      <if test="wxOpenId != null">
+        wx_open_id,
+      </if>
+      <if test="wxNikeName != null">
+        wx_nike_name,
+      </if>
+      <if test="wxCountry != null">
+        wx_country,
+      </if>
+      <if test="wxCity != null">
+        wx_city,
+      </if>
+      <if test="wxLanguage != null">
+        wx_language,
+      </if>
+      <if test="wxProvince != null">
+        wx_province,
+      </if>
+      <if test="wxSex != null">
+        wx_sex,
+      </if>
+      <if test="wxHeadPic != null">
+        wx_head_pic,
+      </if>
+      <if test="crateTime != null">
+        crate_time,
+      </if>
+      <if test="isDel != null">
+        is_del,
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userPhone != null">
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenId != null">
+        #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNikeName != null">
+        #{wxNikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxCountry != null">
+        #{wxCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="wxCity != null">
+        #{wxCity,jdbcType=VARCHAR},
+      </if>
+      <if test="wxLanguage != null">
+        #{wxLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="wxProvince != null">
+        #{wxProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="wxSex != null">
+        #{wxSex,jdbcType=INTEGER},
+      </if>
+      <if test="wxHeadPic != null">
+        #{wxHeadPic,jdbcType=VARCHAR},
+      </if>
+      <if test="crateTime != null">
+        #{crateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifyTime != null">
+        #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.chengzg.wxshop.entity.WxUserinfo">
+    update tb_wx_userinfo
+    <set>
+      <if test="userPhone != null">
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="wxOpenId != null">
+        wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      </if>
+      <if test="wxNikeName != null">
+        wx_nike_name = #{wxNikeName,jdbcType=VARCHAR},
+      </if>
+      <if test="wxCountry != null">
+        wx_country = #{wxCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="wxCity != null">
+        wx_city = #{wxCity,jdbcType=VARCHAR},
+      </if>
+      <if test="wxLanguage != null">
+        wx_language = #{wxLanguage,jdbcType=VARCHAR},
+      </if>
+      <if test="wxProvince != null">
+        wx_province = #{wxProvince,jdbcType=VARCHAR},
+      </if>
+      <if test="wxSex != null">
+        wx_sex = #{wxSex,jdbcType=INTEGER},
+      </if>
+      <if test="wxHeadPic != null">
+        wx_head_pic = #{wxHeadPic,jdbcType=VARCHAR},
+      </if>
+      <if test="crateTime != null">
+        crate_time = #{crateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="isDel != null">
+        is_del = #{isDel,jdbcType=INTEGER},
+      </if>
+      <if test="lastModifyTime != null">
+        last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.chengzg.wxshop.entity.WxUserinfo">
+    update tb_wx_userinfo
+    set user_phone = #{userPhone,jdbcType=VARCHAR},
+      wx_open_id = #{wxOpenId,jdbcType=VARCHAR},
+      wx_nike_name = #{wxNikeName,jdbcType=VARCHAR},
+      wx_country = #{wxCountry,jdbcType=VARCHAR},
+      wx_city = #{wxCity,jdbcType=VARCHAR},
+      wx_language = #{wxLanguage,jdbcType=VARCHAR},
+      wx_province = #{wxProvince,jdbcType=VARCHAR},
+      wx_sex = #{wxSex,jdbcType=INTEGER},
+      wx_head_pic = #{wxHeadPic,jdbcType=VARCHAR},
+      crate_time = #{crateTime,jdbcType=TIMESTAMP},
+      is_del = #{isDel,jdbcType=INTEGER},
+      last_modify_time = #{lastModifyTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>
