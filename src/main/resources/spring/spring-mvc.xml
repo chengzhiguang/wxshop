@@ -38,10 +38,10 @@
             <mvc:mapping path="/api/**" />
             <bean class="com.chengzg.wxshop.interceptor.WhiteListInterceptor" />
         </mvc:interceptor>
-        <mvc:interceptor>
+        <!--<mvc:interceptor>
             <mvc:mapping path="/page/home/**" />
             <bean class="com.chengzg.wxshop.interceptor.WeixinInterceptor" />
-        </mvc:interceptor>
+        </mvc:interceptor>-->
 
     </mvc:interceptors>
 

@@ -10,7 +10,7 @@
 
 
     <bean id="stat-filter" class="com.ziroom.platform.tesla.druid.filter.CatStatFilter" />
-    <bean id="dataSourceMaster" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="db_wxshop_0" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://${jdbc.host.master}/${jdbc.database.master}?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"/>
         <property name="username" value="${jdbc.username.master}"/>
@@ -36,7 +36,7 @@
         </property>
     </bean>
 
-    <bean id="dataSourceSlave" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+    <bean id="db_wxshop_1" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
         <property name="url" value="jdbc:mysql://${jdbc.host.slave}/${jdbc.database.slave}?useUnicode=true&amp;characterEncoding=utf-8&amp;zeroDateTimeBehavior=convertToNull"/>
         <property name="username" value="${jdbc.username.slave}"/>
@@ -66,12 +66,12 @@
         <property name="targetDataSources">
             <map key-type="java.lang.String">
                 <!-- write -->
-                <entry key="master" value-ref="dataSourceMaster"/>
+                <entry key="master" value-ref="db_wxshop_0"/>
                 <!-- read -->
-                <entry key="slave" value-ref="dataSourceSlave"/>
+                <entry key="slave" value-ref="db_wxshop_1"/>
             </map>
         </property>
-        <property name="defaultTargetDataSource" ref="dataSourceMaster"/>
+        <property name="defaultTargetDataSource" ref="db_wxshop_0"/>
     </bean>
 
     <bean id="druidStatInterceptor" class="com.alibaba.druid.support.spring.stat.DruidStatInterceptor"/>
@@ -80,7 +80,7 @@
     </aop:config>
 
     <bean id="masterJdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
-        <constructor-arg index="0" ref="dataSourceMaster"/>
+        <constructor-arg index="0" ref="db_wxshop_0"/>
     </bean>
 
 

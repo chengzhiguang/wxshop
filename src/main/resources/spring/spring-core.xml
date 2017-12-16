@@ -18,29 +18,29 @@
     <task:annotation-driven />
 
         <beans profile="dev">
-            <context:property-placeholder location="classpath:project-dev.properties"/>
+            <context:property-placeholder location="classpath:project-dev.properties" ignore-unresolvable="true"/>
             <import resource="spring-config-datasource-druid.xml" />
-            <import resource="spring-config-dao.xml" />
+            <import resource="spring-config-dao-sharding.xml" />
             <import resource="spring-config-service.xml" />
-            <!--<import resource="spring-config-elastic.xml"/>-->
+            <import resource="spring-config-elastic.xml"/>
             <import resource="spring-config-rabbit.xml"/>
         </beans>
 
     <beans profile="test">
-        <context:property-placeholder location="classpath:project-test.properties"/>
+        <context:property-placeholder location="classpath:project-test.properties" ignore-unresolvable="true"/>
         <import resource="spring-config-datasource-druid.xml" />
-        <import resource="spring-config-dao.xml" />
+        <import resource="spring-config-dao-sharding.xml" />
         <import resource="spring-config-service.xml" />
-        <!--<import resource="spring-config-elastic.xml"/>-->
+        <import resource="spring-config-elastic.xml"/>
         <import resource="spring-config-rabbit.xml"/>
     </beans>
 
     <beans profile="prod">
-        <context:property-placeholder location="classpath:project-prod.properties"/>
+        <context:property-placeholder location="classpath:project-prod.properties" ignore-unresolvable="true"/>
         <import resource="spring-config-datasource-druid.xml" />
-        <import resource="spring-config-dao.xml" />
+        <import resource="spring-config-dao-sharding.xml" />
         <import resource="spring-config-service.xml" />
-        <!--<import resource="spring-config-elastic.xml"/>-->
+        <import resource="spring-config-elastic.xml"/>
         <import resource="spring-config-rabbit.xml"/>
     </beans>
 

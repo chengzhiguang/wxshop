@@ -16,7 +16,7 @@
         SELECT
         <include refid="Base_Column_List" />
         FROM
-        tb_white_list
+        tb_white_list WHERE sys_code in ('2017','2018')
     </select>
 
 

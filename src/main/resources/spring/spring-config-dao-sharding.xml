@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:sharding="http://shardingjdbc.io/schema/shardingjdbc/sharding"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/tx
+           http://www.springframework.org/schema/tx/spring-tx.xsd
+           http://www.springframework.org/schema/aop
+           http://www.springframework.org/schema/aop/spring-aop.xsd http://shardingjdbc.io/schema/shardingjdbc/sharding http://shardingjdbc.io/schema/shardingjdbc/sharding/sharding.xsd">
+
+    <sharding:standard-strategy id="databaseStrategy" sharding-column="sys_code" precise-algorithm-class="com.chengzg.wxshop.algorithm.PreciseModuloDatabaseShardingAlgorithm"  />
+    <sharding:standard-strategy id="tableStrategy" sharding-column="sys_code" precise-algorithm-class="com.chengzg.wxshop.algorithm.PreciseModuloTableShardingAlgorithm" />
+
+    <sharding:data-source id="shardingDataSource">
+        <sharding:sharding-rule data-source-names="db_wxshop_0,db_wxshop_1" default-data-source-name="db_wxshop_0">
+            <sharding:table-rules>
+                <sharding:table-rule logic-table="tb_white_list" actual-data-nodes="db_wxshop_0.tb_white_list_2017,db_wxshop_0.tb_white_list_2018,db_wxshop_0.tb_white_list_2019," database-strategy-ref="databaseStrategy" table-strategy-ref="tableStrategy" />
+                <sharding:table-rule logic-table="tb_wx_userinfo" actual-data-nodes="db_wxshop_0.tb_wx_userinfo_2017,db_wxshop_0.tb_wx_userinfo_2018,db_wxshop_0.tb_wx_userinfo_2019" database-strategy-ref="databaseStrategy" table-strategy-ref="tableStrategy" />
+            </sharding:table-rules>
+            <sharding:binding-table-rules>
+                <sharding:binding-table-rule logic-tables="tb_white_list, tb_wx_userinfo" />
+            </sharding:binding-table-rules>
+        </sharding:sharding-rule>
+        <sharding:props>
+            <prop key="sql.show">true</prop>
+        </sharding:props>
+    </sharding:data-source>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="shardingDataSource" />
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="shardingDataSource"/>
+        <property name="mapperLocations" value="classpath*:mapper/*.xml"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.chengzg.wxshop.mapper"/>
+        <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"/>
+    </bean>
+</beans>
